@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>The Rug Atelier — Collection Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#F8F4EF;--parchment:#EDE8E0;--sand:#C8BC9E;--umber:#8B7355;--dark:#1C1A17;--muted:#7A7265;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--cream);color:var(--dark);font-family:'Jost',sans-serif;font-weight:300;}
+
+/* COVER */
+.cover{width:100vw;min-height:100vh;background:var(--dark);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.ct{position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(200,188,158,.03) 3px,rgba(200,188,158,.03) 4px),repeating-linear-gradient(90deg,transparent,transparent 3px,rgba(200,188,158,.03) 3px,rgba(200,188,158,.03) 4px);pointer-events:none;}
+.cbdr{position:absolute;inset:28px;border:.5px solid rgba(200,188,158,.2);pointer-events:none;}
+.ci{position:relative;text-align:center;padding:56px 60px;z-index:1;}
+.lm{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:44px;}
+.ll{width:72px;height:.5px;background:var(--sand);opacity:.55;}
+.ld{width:7px;height:7px;background:var(--sand);transform:rotate(45deg);opacity:.75;}
+.cbtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(44px,6.5vw,82px);font-weight:300;letter-spacing:.18em;color:var(--cream);line-height:1;text-transform:uppercase;}
+.cbtitle span{display:block;font-size:clamp(20px,2.8vw,35px);letter-spacing:.5em;color:var(--sand);margin-top:10px;font-style:italic;font-weight:300;}
+.csub{margin-top:36px;font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--muted);}
+.ccount{margin-top:14px;font-family:'Cormorant Garamond',serif;font-size:15px;font-style:italic;color:rgba(200,188,158,.45);letter-spacing:.08em;}
+.cyear{margin-top:56px;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);border-top:.5px solid rgba(200,188,158,.18);padding-top:18px;width:180px;margin-left:auto;margin-right:auto;}
+
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(248,244,239,.96);backdrop-filter:blur(14px);border-bottom:.5px solid var(--parchment);padding:0 36px;height:52px;display:flex;align-items:center;justify-content:space-between;transition:transform .3s ease;}
+.nav.hidden{transform:translateY(-100%);}
+.nl{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--dark);text-decoration:none;flex-shrink:0;}
+.nl em{font-style:italic;color:var(--umber);}
+.ng{display:flex;gap:14px;align-items:center;flex-wrap:wrap;justify-content:center;flex:1;padding:0 16px;}
+.ng a{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;white-space:nowrap;}
+.ng a:hover{color:var(--dark);}
+.np{font-size:10px;letter-spacing:.1em;color:var(--muted);font-family:'Cormorant Garamond',serif;font-style:italic;white-space:nowrap;flex-shrink:0;}
+
+/* BODY */
+.pb{padding-top:52px;}
+
+/* GROUP */
+.gs{padding:0;}
+.gh{padding:60px 64px 38px;display:flex;align-items:flex-end;gap:28px;border-bottom:.5px solid var(--parchment);}
+.gnum{font-family:'Cormorant Garamond',serif;font-size:74px;font-weight:300;line-height:1;color:var(--parchment);letter-spacing:-.02em;user-select:none;min-width:72px;}
+.gtb{padding-bottom:4px;}
+.ge{font-size:8.5px;letter-spacing:.42em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;}
+.gt{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;letter-spacing:.06em;color:var(--dark);font-style:italic;line-height:1.1;}
+.gd{font-size:10px;letter-spacing:.12em;color:var(--muted);margin-top:7px;font-weight:300;text-transform:uppercase;}
+.gc{margin-top:10px;font-size:8.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--sand);}
+
+/* MASONRY */
+.mg{columns:3;column-gap:2px;padding:2px;}
+@media(max-width:1000px){.mg{columns:2;}}
+@media(max-width:560px){.mg{columns:1;}}
+.mi{break-inside:avoid;position:relative;overflow:hidden;margin-bottom:2px;cursor:pointer;background:var(--parchment);}
+.mi img{display:block;width:100%;height:auto;transition:transform .55s cubic-bezier(.25,.46,.45,.94);filter:saturate(.88) brightness(.98);}
+.mi:hover img{transform:scale(1.04);filter:saturate(1.06) brightness(1.02);}
+.mn{position:absolute;bottom:10px;right:12px;font-size:8.5px;letter-spacing:.18em;color:rgba(248,244,239,.75);font-family:'Jost',sans-serif;font-weight:200;opacity:0;transition:opacity .3s;text-shadow:0 1px 5px rgba(0,0,0,.55);}
+.mi:hover .mn{opacity:1;}
+.mi.missing{min-height:180px;display:flex;align-items:center;justify-content:center;}
+.mi.missing img{display:none;}
+.mi.missing::after{content:attr(data-name);font-size:9px;letter-spacing:.15em;color:var(--sand);text-transform:uppercase;}
+
+/* DIVIDER */
+.sd{display:flex;align-items:center;gap:22px;padding:36px 64px;}
+.dl{flex:1;height:.5px;background:var(--parchment);}
+.dm{width:4px;height:4px;background:var(--sand);transform:rotate(45deg);}
+
+/* LIGHTBOX */
+.lb{display:none;position:fixed;inset:0;background:rgba(18,16,13,.97);z-index:200;align-items:center;justify-content:center;flex-direction:column;}
+.lb.act{display:flex;}
+.lb img{max-width:88vw;max-height:80vh;object-fit:contain;}
+.lbc{position:absolute;top:20px;right:26px;background:none;border:none;color:var(--sand);font-size:24px;cursor:pointer;font-family:'Cormorant Garamond',serif;opacity:.65;transition:opacity .2s;}
+.lbc:hover{opacity:1;}
+.lbm{margin-top:16px;text-align:center;}
+.lbct{font-size:9.5px;letter-spacing:.38em;text-transform:uppercase;color:var(--muted);font-family:'Jost',sans-serif;}
+.lbg{font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;color:rgba(200,188,158,.38);font-family:'Jost',sans-serif;margin-top:4px;}
+.lbn{position:absolute;top:50%;transform:translateY(-50%);background:none;border:.5px solid rgba(200,188,158,.22);color:var(--sand);width:42px;height:42px;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;transition:border-color .2s,background .2s;font-family:'Cormorant Garamond',serif;}
+.lbn:hover{background:rgba(200,188,158,.07);border-color:rgba(200,188,158,.55);}
+.lbp{left:22px;} .lbnx{right:22px;}
+
+/* FOOTER */
+.pf{padding:40px 64px;border-top:.5px solid var(--parchment);display:flex;align-items:center;justify-content:space-between;}
+.fb{font-family:'Cormorant Garamond',serif;font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--umber);}
+.ft{font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);}
+.fu{font-size:9.5px;letter-spacing:.18em;color:var(--muted);}
+@media print{.nav,.lb{display:none!important;}.pb{padding-top:0;}.gh{break-before:page;}}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover" id="cover">
+  <div class="ct"></div>
+  <div class="cbdr"></div>
+  <div class="ci">
+    <div class="lm"><div class="ll"></div><div class="ld"></div><div class="ll"></div></div>
+    <div class="cbtitle">The Rug Atelier<span>Collection Portfolio</span></div>
+    <div class="csub">Bhadohi &nbsp;·&nbsp; India &nbsp;·&nbsp; therugatelier.co</div>
+    <div class="ccount">135 pieces &nbsp;·&nbsp; 8 compositions</div>
+    <div class="cyear">2025 — 2026</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav hidden" id="mnav">
+  <a href="#cover" class="nl">The Rug <em>Atelier</em></a>
+  <div class="ng">
+    <a href="#g0">Warm Naturals</a>
+    <a href="#g1">Cool Neutrals</a>
+    <a href="#g2">Contrast &amp; Pattern</a>
+    <a href="#g3">Earth &amp; Dark</a>
+    <a href="#g4">Colour &amp; Warmth</a>
+    <a href="#g5">Bold Chromatic</a>
+    <a href="#g6">Green &amp; Mineral</a>
+    <a href="#g7">Sculptural Forms</a>
+  </div>
+  <div class="np">135 pieces</div>
+</nav>
+
+<div class="pb">
+
+<!-- ── I · WARM NATURALS · product1–product17 ─────────────────────── -->
+<section class="gs" id="g0">
+  <div class="gh">
+    <div class="gnum">I</div>
+    <div class="gtb">
+      <div class="ge">Collection · Volume I</div>
+      <div class="gt">Warm Naturals</div>
+      <div class="gd">Sandy, camel &amp; undyed naturals — quiet warmth</div>
+      <div class="gc">17 pieces</div>
+    </div>
+  </div>
+  <div class="mg">
+    <div class="mi" data-name="product1" onclick="oLB(0)"><img src="images/product1.jpeg" alt="No. 001" loading="lazy"><div class="mn">No. 001</div></div>
+    <div class="mi" data-name="product2" onclick="oLB(1)"><img src="images/product2.jpeg" alt="No. 002" loading="lazy"><div class="mn">No. 002</div></div>
+    <div class="mi" data-name="product3" onclick="oLB(2)"><img src="images/product3.jpeg" alt="No. 003" loading="lazy"><div class="mn">No. 003</div></div>
+    <div class="mi" data-name="product4" onclick="oLB(3)"><img src="images/product4.jpeg" alt="No. 004" loading="lazy"><div class="mn">No. 004</div></div>
+    <div class="mi" data-name="product5" onclick="oLB(4)"><img src="images/product5.jpeg" alt="No. 005" loading="lazy"><div class="mn">No. 005</div></div>
+    <div class="mi" data-name="product6" onclick="oLB(5)"><img src="images/product6.jpeg" alt="No. 006" loading="lazy"><div class="mn">No. 006</div></div>
+    <div class="mi" data-name="product7" onclick="oLB(6)"><img src="images/product7.jpeg" alt="No. 007" loading="lazy"><div class="mn">No. 007</div></div>
+    <div class="mi" data-name="product8" onclick="oLB(7)"><img src="images/product8.jpeg" alt="No. 008" loading="lazy"><div class="mn">No. 008</div></div>
+    <div class="mi" data-name="product9" onclick="oLB(8)"><img src="images/product9.jpeg" alt="No. 009" loading="lazy"><div class="mn">No. 009</div></div>
+    <div class="mi" data-name="product10" onclick="oLB(9)"><img src="images/product10.jpeg" alt="No. 010" loading="lazy"><div class="mn">No. 010</div></div>
+    <div class="mi" data-name="product11" onclick="oLB(10)"><img src="images/product11.jpeg" alt="No. 011" loading="lazy"><div class="mn">No. 011</div></div>
+    <div class="mi" data-name="product12" onclick="oLB(11)"><img src="images/product12.jpeg" alt="No. 012" loading="lazy"><div class="mn">No. 012</div></div>
+    <div class="mi" data-name="product13" onclick="oLB(12)"><img src="images/product13.jpeg" alt="No. 013" loading="lazy"><div class="mn">No. 013</div></div>
+    <div class="mi" data-name="product14" onclick="oLB(13)"><img src="images/product14.jpeg" alt="No. 014" loading="lazy"><div class="mn">No. 014</div></div>
+    <div class="mi" data-name="product15" onclick="oLB(14)"><img src="images/product15.jpeg" alt="No. 015" loading="lazy"><div class="mn">No. 015</div></div>
+    <div class="mi" data-name="product16" onclick="oLB(15)"><img src="images/product16.jpeg" alt="No. 016" loading="lazy"><div class="mn">No. 016</div></div>
+    <div class="mi" data-name="product17" onclick="oLB(16)"><img src="images/product17.jpeg" alt="No. 017" loading="lazy"><div class="mn">No. 017</div></div>
+  </div>
+</section>
+<div class="sd"><div class="dl"></div><div class="dm"></div><div class="dl"></div></div>
+
+<!-- ── II · COOL NEUTRALS · product18–product45 ──────────────────── -->
+<section class="gs" id="g1">
+  <div class="gh">
+    <div class="gnum">II</div>
+    <div class="gtb">
+      <div class="ge">Collection · Volume I</div>
+      <div class="gt">Cool Neutrals</div>
+      <div class="gd">Silver, stone, ivory &amp; pebble whites — refined restraint</div>
+      <div class="gc">28 pieces</div>
+    </div>
+  </div>
+  <div class="mg">
+    <div class="mi" data-name="product18" onclick="oLB(17)"><img src="images/product18.jpeg" alt="No. 018" loading="lazy"><div class="mn">No. 018</div></div>
+    <div class="mi" data-name="product19" onclick="oLB(18)"><img src="images/product19.jpeg" alt="No. 019" loading="lazy"><div class="mn">No. 019</div></div>
+    <div class="mi" data-name="product20" onclick="oLB(19)"><img src="images/product20.jpeg" alt="No. 020" loading="lazy"><div class="mn">No. 020</div></div>
+    <div class="mi" data-name="product21" onclick="oLB(20)"><img src="images/product21.jpeg" alt="No. 021" loading="lazy"><div class="mn">No. 021</div></div>
+    <div class="mi" data-name="product22" onclick="oLB(21)"><img src="images/product22.jpeg" alt="No. 022" loading="lazy"><div class="mn">No. 022</div></div>
+    <div class="mi" data-name="product23" onclick="oLB(22)"><img src="images/product23.jpeg" alt="No. 023" loading="lazy"><div class="mn">No. 023</div></div>
+    <div class="mi" data-name="product24" onclick="oLB(23)"><img src="images/product24.jpeg" alt="No. 024" loading="lazy"><div class="mn">No. 024</div></div>
+    <div class="mi" data-name="product25" onclick="oLB(24)"><img src="images/product25.jpeg" alt="No. 025" loading="lazy"><div class="mn">No. 025</div></div>
+    <div class="mi" data-name="product26" onclick="oLB(25)"><img src="images/product26.jpeg" alt="No. 026" loading="lazy"><div class="mn">No. 026</div></div>
+    <div class="mi" data-name="product27" onclick="oLB(26)"><img src="images/product27.jpeg" alt="No. 027" loading="lazy"><div class="mn">No. 027</div></div>
+    <div class="mi" data-name="product28" onclick="oLB(27)"><img src="images/product28.jpeg" alt="No. 028" loading="lazy"><div class="mn">No. 028</div></div>
+    <div class="mi" data-name="product29" onclick="oLB(28)"><img src="images/product29.jpeg" alt="No. 029" loading="lazy"><div class="mn">No. 029</div></div>
+    <div class="mi" data-name="product30" onclick="oLB(29)"><img src="images/product30.jpeg" alt="No. 030" loading="lazy"><div class="mn">No. 030</div></div>
+    <div class="mi" data-name="product31" onclick="oLB(30)"><img src="images/product31.jpeg" alt="No. 031" loading="lazy"><div class="mn">No. 031</div></div>
+    <div class="mi" data-name="product32" onclick="oLB(31)"><img src="images/product32.jpeg" alt="No. 032" loading="lazy"><div class="mn">No. 032</div></div>
+    <div class="mi" data-name="product33" onclick="oLB(32)"><img src="images/product33.jpeg" alt="No. 033" loading="lazy"><div class="mn">No. 033</div></div>
+    <div class="mi" data-name="product34" onclick="oLB(33)"><img src="images/product34.jpeg" alt="No. 034" loading="lazy"><div class="mn">No. 034</div></div>
+    <div class="mi" data-name="product35" onclick="oLB(34)"><img src="images/product35.jpeg" alt="No. 035" loading="lazy"><div class="mn">No. 035</div></div>
+    <div class="mi" data-name="product36" onclick="oLB(35)"><img src="images/product36.jpeg" alt="No. 036" loading="lazy"><div class="mn">No. 036</div></div>
+    <div class="mi" data-name="product37" onclick="oLB(36)"><img src="images/product37.jpeg" alt="No. 037" loading="lazy"><div class="mn">No. 037</div></div>
+    <div class="mi" data-name="product38" onclick="oLB(37)"><img src="images/product38.jpeg" alt="No. 038" loading="lazy"><div class="mn">No. 038</div></div>
+    <div class="mi" data-name="product39" onclick="oLB(38)"><img src="images/product39.jpeg" alt="No. 039" loading="lazy"><div class="mn">No. 039</div></div>
+    <div class="mi" data-name="product40" onclick="oLB(39)"><img src="images/product40.jpeg" alt="No. 040" loading="lazy"><div class="mn">No. 040</div></div>
+    <div class="mi" data-name="product41" onclick="oLB(40)"><img src="images/product41.jpeg" alt="No. 041" loading="lazy"><div class="mn">No. 041</div></div>
+    <div class="mi" data-name="product42" onclick="oLB(41)"><img src="images/product42.jpeg" alt="No. 042" loading="lazy"><div class="mn">No. 042</div></div>
+    <div class="mi" data-name="product43" onclick="oLB(42)"><img src="images/product43.jpeg" alt="No. 043" loading="lazy"><div class="mn">No. 043</div></div>
+    <div class="mi" data-name="product44" onclick="oLB(43)"><img src="images/product44.jpeg" alt="No. 044" loading="lazy"><div class="mn">No. 044</div></div>
+    <div class="mi" data-name="product45" onclick="oLB(44)"><img src="images/product45.jpeg" alt="No. 045" loading="lazy"><div class="mn">No. 045</div></div>
+  </div>
+</section>
+<div class="sd"><div class="dl"></div><div class="dm"></div><div class="dl"></div></div>
+
+<!-- ── III · CONTRAST & PATTERN · product46–product58 ────────────── -->
+<section class="gs" id="g2">
+  <div class="gh">
+    <div class="gnum">III</div>
+    <div class="gtb">
+      <div class="ge">Collection · Volume I</div>
+      <div class="gt">Contrast &amp; Pattern</div>
+      <div class="gd">Geometric lines, bold relief &amp; structural weave</div>
+      <div class="gc">13 pieces</div>
+    </div>
+  </div>
+  <div class="mg">
+    <div class="mi" data-name="product46" onclick="oLB(45)"><img src="images/product46.jpeg" alt="No. 046" loading="lazy"><div class="mn">No. 046</div></div>
+    <div class="mi" data-name="product47" onclick="oLB(46)"><img src="images/product47.jpeg" alt="No. 047" loading="lazy"><div class="mn">No. 047</div></div>
+    <div class="mi" data-name="product48" onclick="oLB(47)"><img src="images/product48.jpeg" alt="No. 048" loading="lazy"><div class="mn">No. 048</div></div>
+    <div class="mi" data-name="product49" onclick="oLB(48)"><img src="images/product49.jpeg" alt="No. 049" loading="lazy"><div class="mn">No. 049</div></div>
+    <div class="mi" data-name="product50" onclick="oLB(49)"><img src="images/product50.jpeg" alt="No. 050" loading="lazy"><div class="mn">No. 050</div></div>
+    <div class="mi" data-name="product51" onclick="oLB(50)"><img src="images/product51.jpeg" alt="No. 051" loading="lazy"><div class="mn">No. 051</div></div>
+    <div class="mi" data-name="product52" onclick="oLB(51)"><img src="images/product52.jpeg" alt="No. 052" loading="lazy"><div class="mn">No. 052</div></div>
+    <div class="mi" data-name="product53" onclick="oLB(52)"><img src="images/product53.jpeg" alt="No. 053" loading="lazy"><div class="mn">No. 053</div></div>
+    <div class="mi" data-name="product54" onclick="oLB(53)"><img src="images/product54.jpeg" alt="No. 054" loading="lazy"><div class="mn">No. 054</div></div>
+    <div class="mi" data-name="product55" onclick="oLB(54)"><img src="images/product55.jpeg" alt="No. 055" loading="lazy"><div class="mn">No. 055</div></div>
+    <div class="mi" data-name="product56" onclick="oLB(55)"><img src="images/product56.jpeg" alt="No. 056" loading="lazy"><div class="mn">No. 056</div></div>
+    <div class="mi" data-name="product57" onclick="oLB(56)"><img src="images/product57.jpeg" alt="No. 057" loading="lazy"><div class="mn">No. 057</div></div>
+    <div class="mi" data-name="product58" onclick="oLB(57)"><img src="images/product58.jpeg" alt="No. 058" loading="lazy"><div class="mn">No. 058</div></div>
+  </div>
+</section>
+<div class="sd"><div class="dl"></div><div class="dm"></div><div class="dl"></div></div>
+
+<!-- ── IV · EARTH & DARK · product59–product73 ───────────────────── -->
+<section class="gs" id="g3">
+  <div class="gh">
+    <div class="gnum">IV</div>
+    <div class="gtb">
+      <div class="ge">Collection · Volume I</div>
+      <div class="gt">Earth &amp; Dark</div>
+      <div class="gd">Deep umber, graphite, rust &amp; natural shadow</div>
+      <div class="gc">15 pieces</div>
+    </div>
+  </div>
+  <div class="mg">
+    <div class="mi" data-name="product59" onclick="oLB(58)"><img src="images/product59.jpeg" alt="No. 059" loading="lazy"><div class="mn">No. 059</div></div>
+    <div class="mi" data-name="product60" onclick="oLB(59)"><img src="images/product60.jpeg" alt="No. 060" loading="lazy"><div class="mn">No. 060</div></div>
+    <div class="mi" data-name="product61" onclick="oLB(60)"><img src="images/product61.jpeg" alt="No. 061" loading="lazy"><div class="mn">No. 061</div></div>
+    <div class="mi" data-name="product62" onclick="oLB(61)"><img src="images/product62.jpeg" alt="No. 062" loading="lazy"><div class="mn">No. 062</div></div>
+    <div class="mi" data-name="product63" onclick="oLB(62)"><img src="images/product63.jpeg" alt="No. 063" loading="lazy"><div class="mn">No. 063</div></div>
+    <div class="mi" data-name="product64" onclick="oLB(63)"><img src="images/product64.jpeg" alt="No. 064" loading="lazy"><div class="mn">No. 064</div></div>
+    <div class="mi" data-name="product65" onclick="oLB(64)"><img src="images/product65.jpeg" alt="No. 065" loading="lazy"><div class="mn">No. 065</div></div>
+    <div class="mi" data-name="product66" onclick="oLB(65)"><img src="images/product66.jpeg" alt="No. 066" loading="lazy"><div class="mn">No. 066</div></div>
+    <div class="mi" data-name="product67" onclick="oLB(66)"><img src="images/product67.jpeg" alt="No. 067" loading="lazy"><div class="mn">No. 067</div></div>
+    <div class="mi" data-name="product68" onclick="oLB(67)"><img src="images/product68.jpeg" alt="No. 068" loading="lazy"><div class="mn">No. 068</div></div>
+    <div class="mi" data-name="product69" onclick="oLB(68)"><img src="images/product69.jpeg" alt="No. 069" loading="lazy"><div class="mn">No. 069</div></div>
+    <div class="mi" data-name="product70" onclick="oLB(69)"><img src="images/product70.jpeg" alt="No. 070" loading="lazy"><div class="mn">No. 070</div></div>
+    <div class="mi" data-name="product71" onclick="oLB(70)"><img src="images/product71.jpeg" alt="No. 071" loading="lazy"><div class="mn">No. 071</div></div>
+    <div class="mi" data-name="product72" onclick="oLB(71)"><img src="images/product72.jpeg" alt="No. 072" loading="lazy"><div class="mn">No. 072</div></div>
+    <div class="mi" data-name="product73" onclick="oLB(72)"><img src="images/product73.jpeg" alt="No. 073" loading="lazy"><div class="mn">No. 073</div></div>
+  </div>
+</section>
+<div class="sd"><div class="dl"></div><div class="dm"></div><div class="dl"></div></div>
+
+<!-- ── V · COLOUR & WARMTH · product74–product86 ─────────────────── -->
+<section class="gs" id="g4">
+  <div class="gh">
+    <div class="gnum">V</div>
+    <div class="gtb">
+      <div class="ge">Collection · Volume I</div>
+      <div class="gt">Colour &amp; Warmth</div>
+      <div class="gd">Terracotta, copper, burnt orange &amp; jewel-toned pigments</div>
+      <div class="gc">13 pieces</div>
+    </div>
+  </div>
+  <div class="mg">
+    <div class="mi" data-name="product74" onclick="oLB(73)"><img src="images/product74.jpeg" alt="No. 074" loading="lazy"><div class="mn">No. 074</div></div>
+    <div class="mi" data-name="product75" onclick="oLB(74)"><img src="images/product75.jpeg" alt="No. 075" loading="lazy"><div class="mn">No. 075</div></div>
+    <div class="mi" data-name="product76" onclick="oLB(75)"><img src="images/product76.jpeg" alt="No. 076" loading="lazy"><div class="mn">No. 076</div></div>
+    <div class="mi" data-name="product77" onclick="oLB(76)"><img src="images/product77.jpeg" alt="No. 077" loading="lazy"><div class="mn">No. 077</div></div>
+    <div class="mi" data-name="product78" onclick="oLB(77)"><img src="images/product78.jpeg" alt="No. 078" loading="lazy"><div class="mn">No. 078</div></div>
+    <div class="mi" data-name="product79" onclick="oLB(78)"><img src="images/product79.jpeg" alt="No. 079" loading="lazy"><div class="mn">No. 079</div></div>
+    <div class="mi" data-name="product80" onclick="oLB(79)"><img src="images/product80.jpeg" alt="No. 080" loading="lazy"><div class="mn">No. 080</div></div>
+    <div class="mi" data-name="product81" onclick="oLB(80)"><img src="images/product81.jpeg" alt="No. 081" loading="lazy"><div class="mn">No. 081</div></div>
+    <div class="mi" data-name="product82" onclick="oLB(81)"><img src="images/product82.jpeg" alt="No. 082" loading="lazy"><div class="mn">No. 082</div></div>
+    <div class="mi" data-name="product83" onclick="oLB(82)"><img src="images/product83.jpeg" alt="No. 083" loading="lazy"><div class="mn">No. 083</div></div>
+    <div class="mi" data-name="product84" onclick="oLB(83)"><img src="images/product84.jpeg" alt="No. 084" loading="lazy"><div class="mn">No. 084</div></div>
+    <div class="mi" data-name="product85" onclick="oLB(84)"><img src="images/product85.jpeg" alt="No. 085" loading="lazy"><div class="mn">No. 085</div></div>
+    <div class="mi" data-name="product86" onclick="oLB(85)"><img src="images/product86.jpeg" alt="No. 086" loading="lazy"><div class="mn">No. 086</div></div>
+  </div>
+</section>
+<div class="sd"><div class="dl"></div><div class="dm"></div><div class="dl"></div></div>
+
+<!-- ── VI · BOLD CHROMATIC · product87–product93 ─────────────────── -->
+<section class="gs" id="g5">
+  <div class="gh">
+    <div class="gnum">VI</div>
+    <div class="gtb">
+      <div class="ge">Collection · Volume I</div>
+      <div class="gt">Bold Chromatic</div>
+      <div class="gd">Vivid pigment, saturated hue &amp; expressive colour</div>
+      <div class="gc">7 pieces</div>
+    </div>
+  </div>
+  <div class="mg">
+    <div class="mi" data-name="product87" onclick="oLB(86)"><img src="images/product87.jpeg" alt="No. 087" loading="lazy"><div class="mn">No. 087</div></div>
+    <div class="mi" data-name="product88" onclick="oLB(87)"><img src="images/product88.jpeg" alt="No. 088" loading="lazy"><div class="mn">No. 088</div></div>
+    <div class="mi" data-name="product89" onclick="oLB(88)"><img src="images/product89.jpeg" alt="No. 089" loading="lazy"><div class="mn">No. 089</div></div>
+    <div class="mi" data-name="product90" onclick="oLB(89)"><img src="images/product90.jpeg" alt="No. 090" loading="lazy"><div class="mn">No. 090</div></div>
+    <div class="mi" data-name="product91" onclick="oLB(90)"><img src="images/product91.jpeg" alt="No. 091" loading="lazy"><div class="mn">No. 091</div></div>
+    <div class="mi" data-name="product92" onclick="oLB(91)"><img src="images/product92.jpeg" alt="No. 092" loading="lazy"><div class="mn">No. 092</div></div>
+    <div class="mi" data-name="product93" onclick="oLB(92)"><img src="images/product93.jpeg" alt="No. 093" loading="lazy"><div class="mn">No. 093</div></div>
+  </div>
+</section>
+<div class="sd"><div class="dl"></div><div class="dm"></div><div class="dl"></div></div>
+
+<!-- ── VII · GREEN & MINERAL · product94–product107 ──────────────── -->
+<section class="gs" id="g6">
+  <div class="gh">
+    <div class="gnum">VII</div>
+    <div class="gtb">
+      <div class="ge">Collection · Volume I</div>
+      <div class="gt">Green &amp; Mineral</div>
+      <div class="gd">Olive, sage, slate &amp; deep teal — nature distilled</div>
+      <div class="gc">14 pieces</div>
+    </div>
+  </div>
+  <div class="mg">
+    <div class="mi" data-name="product94" onclick="oLB(93)"><img src="images/product94.jpeg" alt="No. 094" loading="lazy"><div class="mn">No. 094</div></div>
+    <div class="mi" data-name="product95" onclick="oLB(94)"><img src="images/product95.jpeg" alt="No. 095" loading="lazy"><div class="mn">No. 095</div></div>
+    <div class="mi" data-name="product96" onclick="oLB(95)"><img src="images/product96.jpeg" alt="No. 096" loading="lazy"><div class="mn">No. 096</div></div>
+    <div class="mi" data-name="product97" onclick="oLB(96)"><img src="images/product97.jpeg" alt="No. 097" loading="lazy"><div class="mn">No. 097</div></div>
+    <div class="mi" data-name="product98" onclick="oLB(97)"><img src="images/product98.jpeg" alt="No. 098" loading="lazy"><div class="mn">No. 098</div></div>
+    <div class="mi" data-name="product99" onclick="oLB(98)"><img src="images/product99.jpeg" alt="No. 099" loading="lazy"><div class="mn">No. 099</div></div>
+    <div class="mi" data-name="product100" onclick="oLB(99)"><img src="images/product100.jpeg" alt="No. 100" loading="lazy"><div class="mn">No. 100</div></div>
+    <div class="mi" data-name="product101" onclick="oLB(100)"><img src="images/product101.jpeg" alt="No. 101" loading="lazy"><div class="mn">No. 101</div></div>
+    <div class="mi" data-name="product102" onclick="oLB(101)"><img src="images/product102.jpeg" alt="No. 102" loading="lazy"><div class="mn">No. 102</div></div>
+    <div class="mi" data-name="product103" onclick="oLB(102)"><img src="images/product103.jpeg" alt="No. 103" loading="lazy"><div class="mn">No. 103</div></div>
+    <div class="mi" data-name="product104" onclick="oLB(103)"><img src="images/product104.jpeg" alt="No. 104" loading="lazy"><div class="mn">No. 104</div></div>
+    <div class="mi" data-name="product105" onclick="oLB(104)"><img src="images/product105.jpeg" alt="No. 105" loading="lazy"><div class="mn">No. 105</div></div>
+    <div class="mi" data-name="product106" onclick="oLB(105)"><img src="images/product106.jpeg" alt="No. 106" loading="lazy"><div class="mn">No. 106</div></div>
+    <div class="mi" data-name="product107" onclick="oLB(106)"><img src="images/product107.jpeg" alt="No. 107" loading="lazy"><div class="mn">No. 107</div></div>
+  </div>
+</section>
+<div class="sd"><div class="dl"></div><div class="dm"></div><div class="dl"></div></div>
+
+<!-- ── VIII · SCULPTURAL FORMS · product108–product135 ───────────── -->
+<section class="gs" id="g7">
+  <div class="gh">
+    <div class="gnum">VIII</div>
+    <div class="gtb">
+      <div class="ge">Collection · Volume I</div>
+      <div class="gt">Sculptural Forms</div>
+      <div class="gd">Organic silhouettes, topographic relief &amp; shaped rugs</div>
+      <div class="gc">28 pieces</div>
+    </div>
+  </div>
+  <div class="mg">
+    <div class="mi" data-name="product108" onclick="oLB(107)"><img src="images/product108.jpeg" alt="No. 108" loading="lazy"><div class="mn">No. 108</div></div>
+    <div class="mi" data-name="product109" onclick="oLB(108)"><img src="images/product109.jpeg" alt="No. 109" loading="lazy"><div class="mn">No. 109</div></div>
+    <div class="mi" data-name="product110" onclick="oLB(109)"><img src="images/product110.jpeg" alt="No. 110" loading="lazy"><div class="mn">No. 110</div></div>
+    <div class="mi" data-name="product111" onclick="oLB(110)"><img src="images/product111.jpeg" alt="No. 111" loading="lazy"><div class="mn">No. 111</div></div>
+    <div class="mi" data-name="product112" onclick="oLB(111)"><img src="images/product112.jpeg" alt="No. 112" loading="lazy"><div class="mn">No. 112</div></div>
+    <div class="mi" data-name="product113" onclick="oLB(112)"><img src="images/product113.jpeg" alt="No. 113" loading="lazy"><div class="mn">No. 113</div></div>
+    <div class="mi" data-name="product114" onclick="oLB(113)"><img src="images/product114.jpeg" alt="No. 114" loading="lazy"><div class="mn">No. 114</div></div>
+    <div class="mi" data-name="product115" onclick="oLB(114)"><img src="images/product115.jpeg" alt="No. 115" loading="lazy"><div class="mn">No. 115</div></div>
+    <div class="mi" data-name="product116" onclick="oLB(115)"><img src="images/product116.jpeg" alt="No. 116" loading="lazy"><div class="mn">No. 116</div></div>
+    <div class="mi" data-name="product117" onclick="oLB(116)"><img src="images/product117.jpeg" alt="No. 117" loading="lazy"><div class="mn">No. 117</div></div>
+    <div class="mi" data-name="product118" onclick="oLB(117)"><img src="images/product118.jpeg" alt="No. 118" loading="lazy"><div class="mn">No. 118</div></div>
+    <div class="mi" data-name="product119" onclick="oLB(118)"><img src="images/product119.jpeg" alt="No. 119" loading="lazy"><div class="mn">No. 119</div></div>
+    <div class="mi" data-name="product120" onclick="oLB(119)"><img src="images/product120.jpeg" alt="No. 120" loading="lazy"><div class="mn">No. 120</div></div>
+    <div class="mi" data-name="product121" onclick="oLB(120)"><img src="images/product121.jpeg" alt="No. 121" loading="lazy"><div class="mn">No. 121</div></div>
+    <div class="mi" data-name="product122" onclick="oLB(121)"><img src="images/product122.jpeg" alt="No. 122" loading="lazy"><div class="mn">No. 122</div></div>
+    <div class="mi" data-name="product123" onclick="oLB(122)"><img src="images/product123.jpeg" alt="No. 123" loading="lazy"><div class="mn">No. 123</div></div>
+    <div class="mi" data-name="product124" onclick="oLB(123)"><img src="images/product124.jpeg" alt="No. 124" loading="lazy"><div class="mn">No. 124</div></div>
+    <div class="mi" data-name="product125" onclick="oLB(124)"><img src="images/product125.jpeg" alt="No. 125" loading="lazy"><div class="mn">No. 125</div></div>
+    <div class="mi" data-name="product126" onclick="oLB(125)"><img src="images/product126.jpeg" alt="No. 126" loading="lazy"><div class="mn">No. 126</div></div>
+    <div class="mi" data-name="product127" onclick="oLB(126)"><img src="images/product127.jpeg" alt="No. 127" loading="lazy"><div class="mn">No. 127</div></div>
+    <div class="mi" data-name="product128" onclick="oLB(127)"><img src="images/product128.jpeg" alt="No. 128" loading="lazy"><div class="mn">No. 128</div></div>
+    <div class="mi" data-name="product129" onclick="oLB(128)"><img src="images/product129.jpeg" alt="No. 129" loading="lazy"><div class="mn">No. 129</div></div>
+    <div class="mi" data-name="product130" onclick="oLB(129)"><img src="images/product130.jpeg" alt="No. 130" loading="lazy"><div class="mn">No. 130</div></div>
+    <div class="mi" data-name="product131" onclick="oLB(130)"><img src="images/product131.jpeg" alt="No. 131" loading="lazy"><div class="mn">No. 131</div></div>
+    <div class="mi" data-name="product132" onclick="oLB(131)"><img src="images/product132.jpeg" alt="No. 132" loading="lazy"><div class="mn">No. 132</div></div>
+    <div class="mi" data-name="product133" onclick="oLB(132)"><img src="images/product133.jpeg" alt="No. 133" loading="lazy"><div class="mn">No. 133</div></div>
+    <div class="mi" data-name="product134" onclick="oLB(133)"><img src="images/product134.jpeg" alt="No. 134" loading="lazy"><div class="mn">No. 134</div></div>
+    <div class="mi" data-name="product135" onclick="oLB(134)"><img src="images/product135.jpeg" alt="No. 135" loading="lazy"><div class="mn">No. 135</div></div>
+  </div>
+</section>
+<div class="sd"><div class="dl"></div><div class="dm"></div><div class="dl"></div></div>
+
+<footer class="pf">
+  <div class="fb">The Rug Atelier</div>
+  <div class="ft">Custom · Handcrafted · Direct from Bhadohi</div>
+  <div class="fu">therugatelier.co</div>
+</footer>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb">
+  <button class="lbc" onclick="cLB()">&#x2715;</button>
+  <button class="lbn lbp" onclick="nLB(-1)">&#x2039;</button>
+  <img id="lbi" src="" alt="">
+  <div class="lbm">
+    <div class="lbct" id="lbct"></div>
+    <div class="lbg" id="lbg"></div>
+  </div>
+  <button class="lbn lbnx" onclick="nLB(1)">&#x203A;</button>
+</div>
+
+<script>
+const items = Array.from(document.querySelectorAll('.mi'));
+const N = items.length;
+let c = 0;
+
+// Nav show/hide on scroll past cover
+const cov = document.getElementById('cover');
+const nav = document.getElementById('mnav');
+new IntersectionObserver(e => nav.classList.toggle('hidden', e[0].isIntersecting), {threshold: .05}).observe(cov);
+
+// Mark broken images as missing
+items.forEach(el => {
+  el.querySelector('img').addEventListener('error', () => el.classList.add('missing'));
+});
+
+function groupName(el) {
+  return el.closest('section').querySelector('.gt').textContent;
+}
+
+function oLB(i) {
+  c = i;
+  const el = items[i];
+  document.getElementById('lbi').src = el.querySelector('img').src;
+  document.getElementById('lbct').textContent = 'No. ' + String(i + 1).padStart(3, '0') + '  /  ' + String(N).padStart(3, '0');
+  document.getElementById('lbg').textContent = groupName(el);
+  document.getElementById('lb').classList.add('act');
+  document.body.style.overflow = 'hidden';
+}
+function cLB() {
+  document.getElementById('lb').classList.remove('act');
+  document.body.style.overflow = '';
+}
+function nLB(d) {
+  c = (c + d + N) % N;
+  const el = items[c];
+  document.getElementById('lbi').src = el.querySelector('img').src;
+  document.getElementById('lbct').textContent = 'No. ' + String(c + 1).padStart(3, '0') + '  /  ' + String(N).padStart(3, '0');
+  document.getElementById('lbg').textContent = groupName(el);
+}
+document.getElementById('lb').addEventListener('click', e => { if (e.target === e.currentTarget) cLB(); });
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lb').classList.contains('act')) return;
+  if (e.key === 'Escape') cLB();
+  if (e.key === 'ArrowRight') nLB(1);
+  if (e.key === 'ArrowLeft') nLB(-1);
+});
+</script>
+</body>
+</html>
