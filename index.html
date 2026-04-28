@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1C1A17">
+<title>The Rug Atelier — Collection Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+
+/* ── RESET & BASE ────────────────────────────────────────────────── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root {
+  --cream:    #F8F4EF;
+  --parchment:#EDE8E0;
+  --sand:     #C8BC9E;
+  --umber:    #8B7355;
+  --dark:     #1C1A17;
+  --charcoal: #2E2B26;
+  --muted:    #7A7265;
+  --gap:      3px;
+  --nav-h:    52px;
+  --pad-h:    64px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream);
+  color: var(--dark);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ── COVER ───────────────────────────────────────────────────────── */
+.cover {
+  width: 100vw;
+  min-height: 100vh;
+  background: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cover-texture {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(200,188,158,.025) 3px, rgba(200,188,158,.025) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(200,188,158,.025) 3px, rgba(200,188,158,.025) 4px);
+  pointer-events: none;
+}
+
+.cover-border {
+  position: absolute;
+  inset: clamp(16px, 3vw, 32px);
+  border: 0.5px solid rgba(200,188,158,.18);
+  pointer-events: none;
+}
+
+.cover-inner {
+  position: relative;
+  text-align: center;
+  padding: clamp(32px, 5vw, 64px) clamp(24px, 6vw, 80px);
+  z-index: 1;
+  width: 100%;
+  max-width: 900px;
+}
+
+.logo-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: clamp(32px, 5vh, 52px);
+}
+
+.logo-line {
+  width: clamp(40px, 8vw, 80px);
+  height: 0.5px;
+  background: var(--sand);
+  opacity: .5;
+}
+
+.logo-diamond {
+  width: 7px;
+  height: 7px;
+  background: var(--sand);
+  transform: rotate(45deg);
+  opacity: .75;
+  flex-shrink: 0;
+}
+
+.cover-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 7vw, 82px);
+  font-weight: 300;
+  letter-spacing: .18em;
+  color: var(--cream);
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.cover-brand span {
+  display: block;
+  font-size: clamp(14px, 2.8vw, 34px);
+  letter-spacing: .48em;
+  color: var(--sand);
+  margin-top: 10px;
+  font-style: italic;
+  font-weight: 300;
+}
+
+.cover-sub {
+  margin-top: clamp(24px, 4vh, 40px);
+  font-size: clamp(8px, 1.2vw, 10px);
+  letter-spacing: .4em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.cover-count {
+  margin-top: 12px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(13px, 1.8vw, 15px);
+  font-style: italic;
+  color: rgba(200,188,158,.4);
+  letter-spacing: .08em;
+}
+
+.cover-year {
+  margin-top: clamp(40px, 6vh, 64px);
+  font-size: clamp(8px, 1.2vw, 10px);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-top: 0.5px solid rgba(200,188,158,.15);
+  padding-top: 18px;
+  display: inline-block;
+  min-width: 160px;
+}
+
+/* ── NAV ─────────────────────────────────────────────────────────── */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  height: var(--nav-h);
+  background: rgba(248,244,239,.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 0.5px solid var(--parchment);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(16px, 4vw, 48px);
+  gap: 16px;
+  transition: transform .35s cubic-bezier(.4,0,.2,1);
+  will-change: transform;
+}
+
+.nav.hidden { transform: translateY(-100%); }
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(13px, 1.8vw, 17px);
+  font-weight: 400;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--dark);
+  text-decoration: none;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.nav-logo em { font-style: italic; color: var(--umber); }
+
+.nav-groups {
+  display: flex;
+  gap: clamp(10px, 1.5vw, 22px);
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex: 1;
+  overflow: hidden;
+}
+
+.nav-groups a {
+  font-size: clamp(7px, .9vw, 9px);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color .2s;
+  white-space: nowrap;
+}
+
+.nav-groups a:hover { color: var(--dark); }
+
+.nav-count {
+  font-size: 10px;
+  letter-spacing: .12em;
+  color: var(--muted);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── PAGE BODY ───────────────────────────────────────────────────── */
+.portfolio-body { padding-top: var(--nav-h); }
+
+/* ── GROUP SECTION ───────────────────────────────────────────────── */
+.group-section { padding: 0; }
+
+.group-header {
+  padding: clamp(40px, 6vh, 72px) var(--pad-h) clamp(28px, 4vh, 44px);
+  display: flex;
+  align-items: flex-end;
+  gap: clamp(16px, 3vw, 32px);
+  border-bottom: 0.5px solid var(--parchment);
+}
+
+.group-numeral {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 8vw, 80px);
+  font-weight: 300;
+  line-height: 1;
+  color: var(--parchment);
+  letter-spacing: -.02em;
+  user-select: none;
+  flex-shrink: 0;
+  min-width: clamp(44px, 7vw, 72px);
+}
+
+.group-title-block { padding-bottom: 4px; }
+
+.group-eyebrow {
+  font-size: clamp(7px, .9vw, 8.5px);
+  letter-spacing: .42em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+
+.group-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 300;
+  letter-spacing: .06em;
+  color: var(--dark);
+  font-style: italic;
+  line-height: 1.1;
+}
+
+.group-desc {
+  font-size: clamp(8px, 1.1vw, 10px);
+  letter-spacing: .12em;
+  color: var(--muted);
+  margin-top: 7px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+.group-count {
+  margin-top: 10px;
+  font-size: clamp(7px, .9vw, 8.5px);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--sand);
+}
+
+/* ── GRID ────────────────────────────────────────────────────────── */
+/*
+  Bulletproof CSS Grid — equal columns, equal rows, no orphan alignment issues.
+  Every cell is the same width. Images fill their cell via object-fit: cover.
+  This is pixel-perfect on every browser and platform.
+*/
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+  padding: var(--gap);
+  background: var(--gap) solid transparent;
+}
+
+/* Aspect ratio — all cells are square by default */
+.grid-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--parchment);
+  aspect-ratio: 1 / 1;
+}
+
+/* Portrait cells — taller items (use .portrait class) */
+.grid-item.portrait { aspect-ratio: 3 / 4; }
+
+/* Landscape cells — wider items (use .landscape class) */
+.grid-item.landscape { aspect-ratio: 4 / 3; }
+
+/* Wide feature cell — spans 2 columns */
+.grid-item.wide {
+  grid-column: span 2;
+  aspect-ratio: 2 / 1;
+}
+
+.grid-item img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform .6s cubic-bezier(.25,.46,.45,.94), filter .4s ease;
+  filter: saturate(.88) brightness(.98);
+  will-change: transform;
+}
+
+.grid-item:hover img {
+  transform: scale(1.05);
+  filter: saturate(1.06) brightness(1.02);
+}
+
+.grid-item-num {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  font-size: 8px;
+  letter-spacing: .2em;
+  color: rgba(248,244,239,.8);
+  font-family: 'Jost', sans-serif;
+  font-weight: 200;
+  opacity: 0;
+  transition: opacity .3s;
+  text-shadow: 0 1px 6px rgba(0,0,0,.6);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.grid-item:hover .grid-item-num { opacity: 1; }
+
+/* Missing image placeholder */
+.grid-item.missing img { opacity: 0; }
+.grid-item.missing::after {
+  content: attr(data-name);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  letter-spacing: .15em;
+  color: var(--sand);
+  text-transform: uppercase;
+}
+
+/* ── DIVIDER ─────────────────────────────────────────────────────── */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: clamp(24px, 4vh, 40px) var(--pad-h);
+}
+
+.divider-line { flex: 1; height: 0.5px; background: var(--parchment); }
+.divider-mark { width: 4px; height: 4px; background: var(--sand); transform: rotate(45deg); flex-shrink: 0; }
+
+/* ── LIGHTBOX ────────────────────────────────────────────────────── */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(16,14,11,.97);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 48px 20px 20px;
+}
+
+.lightbox.active { display: flex; }
+
+.lightbox-img-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 0;
+}
+
+.lightbox-img-wrap img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 18px; right: 24px;
+  background: none;
+  border: none;
+  color: var(--sand);
+  font-size: 22px;
+  cursor: pointer;
+  font-family: 'Cormorant Garamond', serif;
+  opacity: .6;
+  transition: opacity .2s;
+  line-height: 1;
+  padding: 4px;
+}
+
+.lightbox-close:hover { opacity: 1; }
+
+.lightbox-meta {
+  margin-top: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.lightbox-counter {
+  font-size: 9px;
+  letter-spacing: .38em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-family: 'Jost', sans-serif;
+}
+
+.lightbox-group {
+  font-size: 8px;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  color: rgba(200,188,158,.35);
+  font-family: 'Jost', sans-serif;
+  margin-top: 4px;
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: 0.5px solid rgba(200,188,158,.2);
+  color: var(--sand);
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color .2s, background .2s;
+  font-family: 'Cormorant Garamond', serif;
+  line-height: 1;
+}
+
+.lightbox-nav:hover {
+  background: rgba(200,188,158,.08);
+  border-color: rgba(200,188,158,.5);
+}
+
+.lightbox-prev { left: clamp(8px, 2vw, 24px); }
+.lightbox-next { right: clamp(8px, 2vw, 24px); }
+
+/* ── FOOTER ──────────────────────────────────────────────────────── */
+.page-footer {
+  padding: clamp(28px, 4vh, 44px) var(--pad-h);
+  border-top: 0.5px solid var(--parchment);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(11px, 1.4vw, 13px);
+  font-weight: 400;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--umber);
+}
+
+.footer-tag {
+  font-size: clamp(8px, 1vw, 9.5px);
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.footer-url {
+  font-size: clamp(8px, 1vw, 9.5px);
+  letter-spacing: .18em;
+  color: var(--muted);
+}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  :root { --pad-h: 32px; }
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .grid-item.wide { grid-column: span 2; }
+  .nav-groups { display: none; }
+}
+
+@media (max-width: 560px) {
+  :root { --pad-h: 20px; }
+  .grid { grid-template-columns: repeat(2, 1fr); gap: 2px; padding: 2px; }
+  .grid-item.wide { grid-column: span 2; }
+  .group-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .page-footer { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 380px) {
+  .grid { grid-template-columns: 1fr; }
+  .grid-item.wide { grid-column: span 1; aspect-ratio: 1/1; }
+}
+
+/* ── PRINT ───────────────────────────────────────────────────────── */
+@media print {
+  .nav, .lightbox { display: none !important; }
+  .portfolio-body { padding-top: 0; }
+  .group-header { break-before: page; }
+  .grid-item { break-inside: avoid; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover" id="cover">
+  <div class="cover-texture"></div>
+  <div class="cover-border"></div>
+  <div class="cover-inner">
+    <div class="logo-mark">
+      <div class="logo-line"></div>
+      <div class="logo-diamond"></div>
+      <div class="logo-line"></div>
+    </div>
+    <div class="cover-brand">
+      The Rug Atelier
+      <span>Collection Portfolio</span>
+    </div>
+    <div class="cover-sub">Bhadohi &nbsp;·&nbsp; India &nbsp;·&nbsp; therugatelier.co</div>
+    <div class="cover-count">135 pieces &nbsp;·&nbsp; 8 compositions</div>
+    <div class="cover-year">2025 — 2026</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav hidden" id="main-nav">
+  <a href="#cover" class="nav-logo">The Rug <em>Atelier</em></a>
+  <div class="nav-groups">
+    <a href="#g0">Warm Naturals</a>
+    <a href="#g1">Cool Neutrals</a>
+    <a href="#g2">Contrast &amp; Pattern</a>
+    <a href="#g3">Earth &amp; Dark</a>
+    <a href="#g4">Colour &amp; Warmth</a>
+    <a href="#g5">Bold Chromatic</a>
+    <a href="#g6">Green &amp; Mineral</a>
+    <a href="#g7">Sculptural Forms</a>
+  </div>
+  <div class="nav-count">135 pieces</div>
+</nav>
+
+<div class="portfolio-body">
+
+<!-- ═══════════════════════════════ I · WARM NATURALS ══════════════════════════════ -->
+<section class="group-section" id="g0">
+  <div class="group-header">
+    <div class="group-numeral">I</div>
+    <div class="group-title-block">
+      <div class="group-eyebrow">Collection · Volume I</div>
+      <div class="group-title">Warm Naturals</div>
+      <div class="group-desc">Sandy, camel &amp; undyed naturals — quiet warmth</div>
+      <div class="group-count">17 pieces</div>
+    </div>
+  </div>
+  <div class="grid" id="grid-g0">
+    <div class="grid-item" data-idx="0" data-group="Warm Naturals" data-name="product1"><img src="images/product1.jpeg" alt="No. 001" loading="lazy"><div class="grid-item-num">No. 001</div></div>
+    <div class="grid-item" data-idx="1" data-group="Warm Naturals" data-name="product2"><img src="images/product2.jpeg" alt="No. 002" loading="lazy"><div class="grid-item-num">No. 002</div></div>
+    <div class="grid-item" data-idx="2" data-group="Warm Naturals" data-name="product3"><img src="images/product3.jpeg" alt="No. 003" loading="lazy"><div class="grid-item-num">No. 003</div></div>
+    <div class="grid-item" data-idx="3" data-group="Warm Naturals" data-name="product4"><img src="images/product4.jpeg" alt="No. 004" loading="lazy"><div class="grid-item-num">No. 004</div></div>
+    <div class="grid-item" data-idx="4" data-group="Warm Naturals" data-name="product5"><img src="images/product5.jpeg" alt="No. 005" loading="lazy"><div class="grid-item-num">No. 005</div></div>
+    <div class="grid-item" data-idx="5" data-group="Warm Naturals" data-name="product6"><img src="images/product6.jpeg" alt="No. 006" loading="lazy"><div class="grid-item-num">No. 006</div></div>
+    <div class="grid-item" data-idx="6" data-group="Warm Naturals" data-name="product7"><img src="images/product7.jpeg" alt="No. 007" loading="lazy"><div class="grid-item-num">No. 007</div></div>
+    <div class="grid-item" data-idx="7" data-group="Warm Naturals" data-name="product8"><img src="images/product8.jpeg" alt="No. 008" loading="lazy"><div class="grid-item-num">No. 008</div></div>
+    <div class="grid-item" data-idx="8" data-group="Warm Naturals" data-name="product9"><img src="images/product9.jpeg" alt="No. 009" loading="lazy"><div class="grid-item-num">No. 009</div></div>
+    <div class="grid-item" data-idx="9" data-group="Warm Naturals" data-name="product10"><img src="images/product10.jpeg" alt="No. 010" loading="lazy"><div class="grid-item-num">No. 010</div></div>
+    <div class="grid-item" data-idx="10" data-group="Warm Naturals" data-name="product11"><img src="images/product11.jpeg" alt="No. 011" loading="lazy"><div class="grid-item-num">No. 011</div></div>
+    <div class="grid-item" data-idx="11" data-group="Warm Naturals" data-name="product12"><img src="images/product12.jpeg" alt="No. 012" loading="lazy"><div class="grid-item-num">No. 012</div></div>
+    <div class="grid-item" data-idx="12" data-group="Warm Naturals" data-name="product13"><img src="images/product13.jpeg" alt="No. 013" loading="lazy"><div class="grid-item-num">No. 013</div></div>
+    <div class="grid-item" data-idx="13" data-group="Warm Naturals" data-name="product14"><img src="images/product14.jpeg" alt="No. 014" loading="lazy"><div class="grid-item-num">No. 014</div></div>
+    <div class="grid-item" data-idx="14" data-group="Warm Naturals" data-name="product15"><img src="images/product15.jpeg" alt="No. 015" loading="lazy"><div class="grid-item-num">No. 015</div></div>
+    <div class="grid-item" data-idx="15" data-group="Warm Naturals" data-name="product16"><img src="images/product16.jpeg" alt="No. 016" loading="lazy"><div class="grid-item-num">No. 016</div></div>
+    <div class="grid-item" data-idx="16" data-group="Warm Naturals" data-name="product17"><img src="images/product17.jpeg" alt="No. 017" loading="lazy"><div class="grid-item-num">No. 017</div></div>
+  </div>
+</section>
+<div class="section-divider"><div class="divider-line"></div><div class="divider-mark"></div><div class="divider-line"></div></div>
+
+<!-- ══════════════════════════════ II · COOL NEUTRALS ══════════════════════════════ -->
+<section class="group-section" id="g1">
+  <div class="group-header">
+    <div class="group-numeral">II</div>
+    <div class="group-title-block">
+      <div class="group-eyebrow">Collection · Volume I</div>
+      <div class="group-title">Cool Neutrals</div>
+      <div class="group-desc">Silver, stone, ivory &amp; pebble whites — refined restraint</div>
+      <div class="group-count">28 pieces</div>
+    </div>
+  </div>
+  <div class="grid" id="grid-g1">
+    <div class="grid-item" data-idx="17" data-group="Cool Neutrals" data-name="product18"><img src="images/product18.jpeg" alt="No. 018" loading="lazy"><div class="grid-item-num">No. 018</div></div>
+    <div class="grid-item" data-idx="18" data-group="Cool Neutrals" data-name="product19"><img src="images/product19.jpeg" alt="No. 019" loading="lazy"><div class="grid-item-num">No. 019</div></div>
+    <div class="grid-item" data-idx="19" data-group="Cool Neutrals" data-name="product20"><img src="images/product20.jpeg" alt="No. 020" loading="lazy"><div class="grid-item-num">No. 020</div></div>
+    <div class="grid-item" data-idx="20" data-group="Cool Neutrals" data-name="product21"><img src="images/product21.jpeg" alt="No. 021" loading="lazy"><div class="grid-item-num">No. 021</div></div>
+    <div class="grid-item" data-idx="21" data-group="Cool Neutrals" data-name="product22"><img src="images/product22.jpeg" alt="No. 022" loading="lazy"><div class="grid-item-num">No. 022</div></div>
+    <div class="grid-item" data-idx="22" data-group="Cool Neutrals" data-name="product23"><img src="images/product23.jpeg" alt="No. 023" loading="lazy"><div class="grid-item-num">No. 023</div></div>
+    <div class="grid-item" data-idx="23" data-group="Cool Neutrals" data-name="product24"><img src="images/product24.jpeg" alt="No. 024" loading="lazy"><div class="grid-item-num">No. 024</div></div>
+    <div class="grid-item" data-idx="24" data-group="Cool Neutrals" data-name="product25"><img src="images/product25.jpeg" alt="No. 025" loading="lazy"><div class="grid-item-num">No. 025</div></div>
+    <div class="grid-item" data-idx="25" data-group="Cool Neutrals" data-name="product26"><img src="images/product26.jpeg" alt="No. 026" loading="lazy"><div class="grid-item-num">No. 026</div></div>
+    <div class="grid-item" data-idx="26" data-group="Cool Neutrals" data-name="product27"><img src="images/product27.jpeg" alt="No. 027" loading="lazy"><div class="grid-item-num">No. 027</div></div>
+    <div class="grid-item" data-idx="27" data-group="Cool Neutrals" data-name="product28"><img src="images/product28.jpeg" alt="No. 028" loading="lazy"><div class="grid-item-num">No. 028</div></div>
+    <div class="grid-item" data-idx="28" data-group="Cool Neutrals" data-name="product29"><img src="images/product29.jpeg" alt="No. 029" loading="lazy"><div class="grid-item-num">No. 029</div></div>
+    <div class="grid-item" data-idx="29" data-group="Cool Neutrals" data-name="product30"><img src="images/product30.jpeg" alt="No. 030" loading="lazy"><div class="grid-item-num">No. 030</div></div>
+    <div class="grid-item" data-idx="30" data-group="Cool Neutrals" data-name="product31"><img src="images/product31.jpeg" alt="No. 031" loading="lazy"><div class="grid-item-num">No. 031</div></div>
+    <div class="grid-item" data-idx="31" data-group="Cool Neutrals" data-name="product32"><img src="images/product32.jpeg" alt="No. 032" loading="lazy"><div class="grid-item-num">No. 032</div></div>
+    <div class="grid-item" data-idx="32" data-group="Cool Neutrals" data-name="product33"><img src="images/product33.jpeg" alt="No. 033" loading="lazy"><div class="grid-item-num">No. 033</div></div>
+    <div class="grid-item" data-idx="33" data-group="Cool Neutrals" data-name="product34"><img src="images/product34.jpeg" alt="No. 034" loading="lazy"><div class="grid-item-num">No. 034</div></div>
+    <div class="grid-item" data-idx="34" data-group="Cool Neutrals" data-name="product35"><img src="images/product35.jpeg" alt="No. 035" loading="lazy"><div class="grid-item-num">No. 035</div></div>
+    <div class="grid-item" data-idx="35" data-group="Cool Neutrals" data-name="product36"><img src="images/product36.jpeg" alt="No. 036" loading="lazy"><div class="grid-item-num">No. 036</div></div>
+    <div class="grid-item" data-idx="36" data-group="Cool Neutrals" data-name="product37"><img src="images/product37.jpeg" alt="No. 037" loading="lazy"><div class="grid-item-num">No. 037</div></div>
+    <div class="grid-item" data-idx="37" data-group="Cool Neutrals" data-name="product38"><img src="images/product38.jpeg" alt="No. 038" loading="lazy"><div class="grid-item-num">No. 038</div></div>
+    <div class="grid-item" data-idx="38" data-group="Cool Neutrals" data-name="product39"><img src="images/product39.jpeg" alt="No. 039" loading="lazy"><div class="grid-item-num">No. 039</div></div>
+    <div class="grid-item" data-idx="39" data-group="Cool Neutrals" data-name="product40"><img src="images/product40.jpeg" alt="No. 040" loading="lazy"><div class="grid-item-num">No. 040</div></div>
+    <div class="grid-item" data-idx="40" data-group="Cool Neutrals" data-name="product41"><img src="images/product41.jpeg" alt="No. 041" loading="lazy"><div class="grid-item-num">No. 041</div></div>
+    <div class="grid-item" data-idx="41" data-group="Cool Neutrals" data-name="product42"><img src="images/product42.jpeg" alt="No. 042" loading="lazy"><div class="grid-item-num">No. 042</div></div>
+    <div class="grid-item" data-idx="42" data-group="Cool Neutrals" data-name="product43"><img src="images/product43.jpeg" alt="No. 043" loading="lazy"><div class="grid-item-num">No. 043</div></div>
+    <div class="grid-item" data-idx="43" data-group="Cool Neutrals" data-name="product44"><img src="images/product44.jpeg" alt="No. 044" loading="lazy"><div class="grid-item-num">No. 044</div></div>
+    <div class="grid-item" data-idx="44" data-group="Cool Neutrals" data-name="product45"><img src="images/product45.jpeg" alt="No. 045" loading="lazy"><div class="grid-item-num">No. 045</div></div>
+  </div>
+</section>
+<div class="section-divider"><div class="divider-line"></div><div class="divider-mark"></div><div class="divider-line"></div></div>
+
+<!-- ════════════════════════════ III · CONTRAST & PATTERN ══════════════════════════ -->
+<section class="group-section" id="g2">
+  <div class="group-header">
+    <div class="group-numeral">III</div>
+    <div class="group-title-block">
+      <div class="group-eyebrow">Collection · Volume I</div>
+      <div class="group-title">Contrast &amp; Pattern</div>
+      <div class="group-desc">Geometric lines, bold relief &amp; structural weave</div>
+      <div class="group-count">13 pieces</div>
+    </div>
+  </div>
+  <div class="grid" id="grid-g2">
+    <div class="grid-item" data-idx="45" data-group="Contrast &amp; Pattern" data-name="product46"><img src="images/product46.jpeg" alt="No. 046" loading="lazy"><div class="grid-item-num">No. 046</div></div>
+    <div class="grid-item" data-idx="46" data-group="Contrast &amp; Pattern" data-name="product47"><img src="images/product47.jpeg" alt="No. 047" loading="lazy"><div class="grid-item-num">No. 047</div></div>
+    <div class="grid-item" data-idx="47" data-group="Contrast &amp; Pattern" data-name="product48"><img src="images/product48.jpeg" alt="No. 048" loading="lazy"><div class="grid-item-num">No. 048</div></div>
+    <div class="grid-item" data-idx="48" data-group="Contrast &amp; Pattern" data-name="product49"><img src="images/product49.jpeg" alt="No. 049" loading="lazy"><div class="grid-item-num">No. 049</div></div>
+    <div class="grid-item" data-idx="49" data-group="Contrast &amp; Pattern" data-name="product50"><img src="images/product50.jpeg" alt="No. 050" loading="lazy"><div class="grid-item-num">No. 050</div></div>
+    <div class="grid-item" data-idx="50" data-group="Contrast &amp; Pattern" data-name="product51"><img src="images/product51.jpeg" alt="No. 051" loading="lazy"><div class="grid-item-num">No. 051</div></div>
+    <div class="grid-item" data-idx="51" data-group="Contrast &amp; Pattern" data-name="product52"><img src="images/product52.jpeg" alt="No. 052" loading="lazy"><div class="grid-item-num">No. 052</div></div>
+    <div class="grid-item" data-idx="52" data-group="Contrast &amp; Pattern" data-name="product53"><img src="images/product53.jpeg" alt="No. 053" loading="lazy"><div class="grid-item-num">No. 053</div></div>
+    <div class="grid-item" data-idx="53" data-group="Contrast &amp; Pattern" data-name="product54"><img src="images/product54.jpeg" alt="No. 054" loading="lazy"><div class="grid-item-num">No. 054</div></div>
+    <div class="grid-item" data-idx="54" data-group="Contrast &amp; Pattern" data-name="product55"><img src="images/product55.jpeg" alt="No. 055" loading="lazy"><div class="grid-item-num">No. 055</div></div>
+    <div class="grid-item" data-idx="55" data-group="Contrast &amp; Pattern" data-name="product56"><img src="images/product56.jpeg" alt="No. 056" loading="lazy"><div class="grid-item-num">No. 056</div></div>
+    <div class="grid-item" data-idx="56" data-group="Contrast &amp; Pattern" data-name="product57"><img src="images/product57.jpeg" alt="No. 057" loading="lazy"><div class="grid-item-num">No. 057</div></div>
+    <div class="grid-item" data-idx="57" data-group="Contrast &amp; Pattern" data-name="product58"><img src="images/product58.jpeg" alt="No. 058" loading="lazy"><div class="grid-item-num">No. 058</div></div>
+  </div>
+</section>
+<div class="section-divider"><div class="divider-line"></div><div class="divider-mark"></div><div class="divider-line"></div></div>
+
+<!-- ══════════════════════════════ IV · EARTH & DARK ═══════════════════════════════ -->
+<section class="group-section" id="g3">
+  <div class="group-header">
+    <div class="group-numeral">IV</div>
+    <div class="group-title-block">
+      <div class="group-eyebrow">Collection · Volume I</div>
+      <div class="group-title">Earth &amp; Dark</div>
+      <div class="group-desc">Deep umber, graphite, rust &amp; natural shadow</div>
+      <div class="group-count">15 pieces</div>
+    </div>
+  </div>
+  <div class="grid" id="grid-g3">
+    <div class="grid-item" data-idx="58" data-group="Earth &amp; Dark" data-name="product59"><img src="images/product59.jpeg" alt="No. 059" loading="lazy"><div class="grid-item-num">No. 059</div></div>
+    <div class="grid-item" data-idx="59" data-group="Earth &amp; Dark" data-name="product60"><img src="images/product60.jpeg" alt="No. 060" loading="lazy"><div class="grid-item-num">No. 060</div></div>
+    <div class="grid-item" data-idx="60" data-group="Earth &amp; Dark" data-name="product61"><img src="images/product61.jpeg" alt="No. 061" loading="lazy"><div class="grid-item-num">No. 061</div></div>
+    <div class="grid-item" data-idx="61" data-group="Earth &amp; Dark" data-name="product62"><img src="images/product62.jpeg" alt="No. 062" loading="lazy"><div class="grid-item-num">No. 062</div></div>
+    <div class="grid-item" data-idx="62" data-group="Earth &amp; Dark" data-name="product63"><img src="images/product63.jpeg" alt="No. 063" loading="lazy"><div class="grid-item-num">No. 063</div></div>
+    <div class="grid-item" data-idx="63" data-group="Earth &amp; Dark" data-name="product64"><img src="images/product64.jpeg" alt="No. 064" loading="lazy"><div class="grid-item-num">No. 064</div></div>
+    <div class="grid-item" data-idx="64" data-group="Earth &amp; Dark" data-name="product65"><img src="images/product65.jpeg" alt="No. 065" loading="lazy"><div class="grid-item-num">No. 065</div></div>
+    <div class="grid-item" data-idx="65" data-group="Earth &amp; Dark" data-name="product66"><img src="images/product66.jpeg" alt="No. 066" loading="lazy"><div class="grid-item-num">No. 066</div></div>
+    <div class="grid-item" data-idx="66" data-group="Earth &amp; Dark" data-name="product67"><img src="images/product67.jpeg" alt="No. 067" loading="lazy"><div class="grid-item-num">No. 067</div></div>
+    <div class="grid-item" data-idx="67" data-group="Earth &amp; Dark" data-name="product68"><img src="images/product68.jpeg" alt="No. 068" loading="lazy"><div class="grid-item-num">No. 068</div></div>
+    <div class="grid-item" data-idx="68" data-group="Earth &amp; Dark" data-name="product69"><img src="images/product69.jpeg" alt="No. 069" loading="lazy"><div class="grid-item-num">No. 069</div></div>
+    <div class="grid-item" data-idx="69" data-group="Earth &amp; Dark" data-name="product70"><img src="images/product70.jpeg" alt="No. 070" loading="lazy"><div class="grid-item-num">No. 070</div></div>
+    <div class="grid-item" data-idx="70" data-group="Earth &amp; Dark" data-name="product71"><img src="images/product71.jpeg" alt="No. 071" loading="lazy"><div class="grid-item-num">No. 071</div></div>
+    <div class="grid-item" data-idx="71" data-group="Earth &amp; Dark" data-name="product72"><img src="images/product72.jpeg" alt="No. 072" loading="lazy"><div class="grid-item-num">No. 072</div></div>
+    <div class="grid-item" data-idx="72" data-group="Earth &amp; Dark" data-name="product73"><img src="images/product73.jpeg" alt="No. 073" loading="lazy"><div class="grid-item-num">No. 073</div></div>
+  </div>
+</section>
+<div class="section-divider"><div class="divider-line"></div><div class="divider-mark"></div><div class="divider-line"></div></div>
+
+<!-- ═════════════════════════════ V · COLOUR & WARMTH ══════════════════════════════ -->
+<section class="group-section" id="g4">
+  <div class="group-header">
+    <div class="group-numeral">V</div>
+    <div class="group-title-block">
+      <div class="group-eyebrow">Collection · Volume I</div>
+      <div class="group-title">Colour &amp; Warmth</div>
+      <div class="group-desc">Terracotta, copper, burnt orange &amp; jewel-toned pigments</div>
+      <div class="group-count">13 pieces</div>
+    </div>
+  </div>
+  <div class="grid" id="grid-g4">
+    <div class="grid-item" data-idx="73" data-group="Colour &amp; Warmth" data-name="product74"><img src="images/product74.jpeg" alt="No. 074" loading="lazy"><div class="grid-item-num">No. 074</div></div>
+    <div class="grid-item" data-idx="74" data-group="Colour &amp; Warmth" data-name="product75"><img src="images/product75.jpeg" alt="No. 075" loading="lazy"><div class="grid-item-num">No. 075</div></div>
+    <div class="grid-item" data-idx="75" data-group="Colour &amp; Warmth" data-name="product76"><img src="images/product76.jpeg" alt="No. 076" loading="lazy"><div class="grid-item-num">No. 076</div></div>
+    <div class="grid-item" data-idx="76" data-group="Colour &amp; Warmth" data-name="product77"><img src="images/product77.jpeg" alt="No. 077" loading="lazy"><div class="grid-item-num">No. 077</div></div>
+    <div class="grid-item" data-idx="77" data-group="Colour &amp; Warmth" data-name="product78"><img src="images/product78.jpeg" alt="No. 078" loading="lazy"><div class="grid-item-num">No. 078</div></div>
+    <div class="grid-item" data-idx="78" data-group="Colour &amp; Warmth" data-name="product79"><img src="images/product79.jpeg" alt="No. 079" loading="lazy"><div class="grid-item-num">No. 079</div></div>
+    <div class="grid-item" data-idx="79" data-group="Colour &amp; Warmth" data-name="product80"><img src="images/product80.jpeg" alt="No. 080" loading="lazy"><div class="grid-item-num">No. 080</div></div>
+    <div class="grid-item" data-idx="80" data-group="Colour &amp; Warmth" data-name="product81"><img src="images/product81.jpeg" alt="No. 081" loading="lazy"><div class="grid-item-num">No. 081</div></div>
+    <div class="grid-item" data-idx="81" data-group="Colour &amp; Warmth" data-name="product82"><img src="images/product82.jpeg" alt="No. 082" loading="lazy"><div class="grid-item-num">No. 082</div></div>
+    <div class="grid-item" data-idx="82" data-group="Colour &amp; Warmth" data-name="product83"><img src="images/product83.jpeg" alt="No. 083" loading="lazy"><div class="grid-item-num">No. 083</div></div>
+    <div class="grid-item" data-idx="83" data-group="Colour &amp; Warmth" data-name="product84"><img src="images/product84.jpeg" alt="No. 084" loading="lazy"><div class="grid-item-num">No. 084</div></div>
+    <div class="grid-item" data-idx="84" data-group="Colour &amp; Warmth" data-name="product85"><img src="images/product85.jpeg" alt="No. 085" loading="lazy"><div class="grid-item-num">No. 085</div></div>
+    <div class="grid-item" data-idx="85" data-group="Colour &amp; Warmth" data-name="product86"><img src="images/product86.jpeg" alt="No. 086" loading="lazy"><div class="grid-item-num">No. 086</div></div>
+  </div>
+</section>
+<div class="section-divider"><div class="divider-line"></div><div class="divider-mark"></div><div class="divider-line"></div></div>
+
+<!-- ══════════════════════════════ VI · BOLD CHROMATIC ═════════════════════════════ -->
+<section class="group-section" id="g5">
+  <div class="group-header">
+    <div class="group-numeral">VI</div>
+    <div class="group-title-block">
+      <div class="group-eyebrow">Collection · Volume I</div>
+      <div class="group-title">Bold Chromatic</div>
+      <div class="group-desc">Vivid pigment, saturated hue &amp; expressive colour</div>
+      <div class="group-count">7 pieces</div>
+    </div>
+  </div>
+  <div class="grid" id="grid-g5">
+    <div class="grid-item" data-idx="86" data-group="Bold Chromatic" data-name="product87"><img src="images/product87.jpeg" alt="No. 087" loading="lazy"><div class="grid-item-num">No. 087</div></div>
+    <div class="grid-item" data-idx="87" data-group="Bold Chromatic" data-name="product88"><img src="images/product88.jpeg" alt="No. 088" loading="lazy"><div class="grid-item-num">No. 088</div></div>
+    <div class="grid-item" data-idx="88" data-group="Bold Chromatic" data-name="product89"><img src="images/product89.jpeg" alt="No. 089" loading="lazy"><div class="grid-item-num">No. 089</div></div>
+    <div class="grid-item" data-idx="89" data-group="Bold Chromatic" data-name="product90"><img src="images/product90.jpeg" alt="No. 090" loading="lazy"><div class="grid-item-num">No. 090</div></div>
+    <div class="grid-item" data-idx="90" data-group="Bold Chromatic" data-name="product91"><img src="images/product91.jpeg" alt="No. 091" loading="lazy"><div class="grid-item-num">No. 091</div></div>
+    <div class="grid-item" data-idx="91" data-group="Bold Chromatic" data-name="product92"><img src="images/product92.jpeg" alt="No. 092" loading="lazy"><div class="grid-item-num">No. 092</div></div>
+    <div class="grid-item" data-idx="92" data-group="Bold Chromatic" data-name="product93"><img src="images/product93.jpeg" alt="No. 093" loading="lazy"><div class="grid-item-num">No. 093</div></div>
+  </div>
+</section>
+<div class="section-divider"><div class="divider-line"></div><div class="divider-mark"></div><div class="divider-line"></div></div>
+
+<!-- ═════════════════════════════ VII · GREEN & MINERAL ════════════════════════════ -->
+<section class="group-section" id="g6">
+  <div class="group-header">
+    <div class="group-numeral">VII</div>
+    <div class="group-title-block">
+      <div class="group-eyebrow">Collection · Volume I</div>
+      <div class="group-title">Green &amp; Mineral</div>
+      <div class="group-desc">Olive, sage, slate &amp; deep teal — nature distilled</div>
+      <div class="group-count">14 pieces</div>
+    </div>
+  </div>
+  <div class="grid" id="grid-g6">
+    <div class="grid-item" data-idx="93" data-group="Green &amp; Mineral" data-name="product94"><img src="images/product94.jpeg" alt="No. 094" loading="lazy"><div class="grid-item-num">No. 094</div></div>
+    <div class="grid-item" data-idx="94" data-group="Green &amp; Mineral" data-name="product95"><img src="images/product95.jpeg" alt="No. 095" loading="lazy"><div class="grid-item-num">No. 095</div></div>
+    <div class="grid-item" data-idx="95" data-group="Green &amp; Mineral" data-name="product96"><img src="images/product96.jpeg" alt="No. 096" loading="lazy"><div class="grid-item-num">No. 096</div></div>
+    <div class="grid-item" data-idx="96" data-group="Green &amp; Mineral" data-name="product97"><img src="images/product97.jpeg" alt="No. 097" loading="lazy"><div class="grid-item-num">No. 097</div></div>
+    <div class="grid-item" data-idx="97" data-group="Green &amp; Mineral" data-name="product98"><img src="images/product98.jpeg" alt="No. 098" loading="lazy"><div class="grid-item-num">No. 098</div></div>
+    <div class="grid-item" data-idx="98" data-group="Green &amp; Mineral" data-name="product99"><img src="images/product99.jpeg" alt="No. 099" loading="lazy"><div class="grid-item-num">No. 099</div></div>
+    <div class="grid-item" data-idx="99" data-group="Green &amp; Mineral" data-name="product100"><img src="images/product100.jpeg" alt="No. 100" loading="lazy"><div class="grid-item-num">No. 100</div></div>
+    <div class="grid-item" data-idx="100" data-group="Green &amp; Mineral" data-name="product101"><img src="images/product101.jpeg" alt="No. 101" loading="lazy"><div class="grid-item-num">No. 101</div></div>
+    <div class="grid-item" data-idx="101" data-group="Green &amp; Mineral" data-name="product102"><img src="images/product102.jpeg" alt="No. 102" loading="lazy"><div class="grid-item-num">No. 102</div></div>
+    <div class="grid-item" data-idx="102" data-group="Green &amp; Mineral" data-name="product103"><img src="images/product103.jpeg" alt="No. 103" loading="lazy"><div class="grid-item-num">No. 103</div></div>
+    <div class="grid-item" data-idx="103" data-group="Green &amp; Mineral" data-name="product104"><img src="images/product104.jpeg" alt="No. 104" loading="lazy"><div class="grid-item-num">No. 104</div></div>
+    <div class="grid-item" data-idx="104" data-group="Green &amp; Mineral" data-name="product105"><img src="images/product105.jpeg" alt="No. 105" loading="lazy"><div class="grid-item-num">No. 105</div></div>
+    <div class="grid-item" data-idx="105" data-group="Green &amp; Mineral" data-name="product106"><img src="images/product106.jpeg" alt="No. 106" loading="lazy"><div class="grid-item-num">No. 106</div></div>
+    <div class="grid-item" data-idx="106" data-group="Green &amp; Mineral" data-name="product107"><img src="images/product107.jpeg" alt="No. 107" loading="lazy"><div class="grid-item-num">No. 107</div></div>
+  </div>
+</section>
+<div class="section-divider"><div class="divider-line"></div><div class="divider-mark"></div><div class="divider-line"></div></div>
+
+<!-- ══════════════════════════════ VIII · SCULPTURAL FORMS ═════════════════════════ -->
+<section class="group-section" id="g7">
+  <div class="group-header">
+    <div class="group-numeral">VIII</div>
+    <div class="group-title-block">
+      <div class="group-eyebrow">Collection · Volume I</div>
+      <div class="group-title">Sculptural Forms</div>
+      <div class="group-desc">Organic silhouettes, topographic relief &amp; shaped rugs</div>
+      <div class="group-count">28 pieces</div>
+    </div>
+  </div>
+  <div class="grid" id="grid-g7">
+    <div class="grid-item" data-idx="107" data-group="Sculptural Forms" data-name="product108"><img src="images/product108.jpeg" alt="No. 108" loading="lazy"><div class="grid-item-num">No. 108</div></div>
+    <div class="grid-item" data-idx="108" data-group="Sculptural Forms" data-name="product109"><img src="images/product109.jpeg" alt="No. 109" loading="lazy"><div class="grid-item-num">No. 109</div></div>
+    <div class="grid-item" data-idx="109" data-group="Sculptural Forms" data-name="product110"><img src="images/product110.jpeg" alt="No. 110" loading="lazy"><div class="grid-item-num">No. 110</div></div>
+    <div class="grid-item" data-idx="110" data-group="Sculptural Forms" data-name="product111"><img src="images/product111.jpeg" alt="No. 111" loading="lazy"><div class="grid-item-num">No. 111</div></div>
+    <div class="grid-item" data-idx="111" data-group="Sculptural Forms" data-name="product112"><img src="images/product112.jpeg" alt="No. 112" loading="lazy"><div class="grid-item-num">No. 112</div></div>
+    <div class="grid-item" data-idx="112" data-group="Sculptural Forms" data-name="product113"><img src="images/product113.jpeg" alt="No. 113" loading="lazy"><div class="grid-item-num">No. 113</div></div>
+    <div class="grid-item" data-idx="113" data-group="Sculptural Forms" data-name="product114"><img src="images/product114.jpeg" alt="No. 114" loading="lazy"><div class="grid-item-num">No. 114</div></div>
+    <div class="grid-item" data-idx="114" data-group="Sculptural Forms" data-name="product115"><img src="images/product115.jpeg" alt="No. 115" loading="lazy"><div class="grid-item-num">No. 115</div></div>
+    <div class="grid-item" data-idx="115" data-group="Sculptural Forms" data-name="product116"><img src="images/product116.jpeg" alt="No. 116" loading="lazy"><div class="grid-item-num">No. 116</div></div>
+    <div class="grid-item" data-idx="116" data-group="Sculptural Forms" data-name="product117"><img src="images/product117.jpeg" alt="No. 117" loading="lazy"><div class="grid-item-num">No. 117</div></div>
+    <div class="grid-item" data-idx="117" data-group="Sculptural Forms" data-name="product118"><img src="images/product118.jpeg" alt="No. 118" loading="lazy"><div class="grid-item-num">No. 118</div></div>
+    <div class="grid-item" data-idx="118" data-group="Sculptural Forms" data-name="product119"><img src="images/product119.jpeg" alt="No. 119" loading="lazy"><div class="grid-item-num">No. 119</div></div>
+    <div class="grid-item" data-idx="119" data-group="Sculptural Forms" data-name="product120"><img src="images/product120.jpeg" alt="No. 120" loading="lazy"><div class="grid-item-num">No. 120</div></div>
+    <div class="grid-item" data-idx="120" data-group="Sculptural Forms" data-name="product121"><img src="images/product121.jpeg" alt="No. 121" loading="lazy"><div class="grid-item-num">No. 121</div></div>
+    <div class="grid-item" data-idx="121" data-group="Sculptural Forms" data-name="product122"><img src="images/product122.jpeg" alt="No. 122" loading="lazy"><div class="grid-item-num">No. 122</div></div>
+    <div class="grid-item" data-idx="122" data-group="Sculptural Forms" data-name="product123"><img src="images/product123.jpeg" alt="No. 123" loading="lazy"><div class="grid-item-num">No. 123</div></div>
+    <div class="grid-item" data-idx="123" data-group="Sculptural Forms" data-name="product124"><img src="images/product124.jpeg" alt="No. 124" loading="lazy"><div class="grid-item-num">No. 124</div></div>
+    <div class="grid-item" data-idx="124" data-group="Sculptural Forms" data-name="product125"><img src="images/product125.jpeg" alt="No. 125" loading="lazy"><div class="grid-item-num">No. 125</div></div>
+    <div class="grid-item" data-idx="125" data-group="Sculptural Forms" data-name="product126"><img src="images/product126.jpeg" alt="No. 126" loading="lazy"><div class="grid-item-num">No. 126</div></div>
+    <div class="grid-item" data-idx="126" data-group="Sculptural Forms" data-name="product127"><img src="images/product127.jpeg" alt="No. 127" loading="lazy"><div class="grid-item-num">No. 127</div></div>
+    <div class="grid-item" data-idx="127" data-group="Sculptural Forms" data-name="product128"><img src="images/product128.jpeg" alt="No. 128" loading="lazy"><div class="grid-item-num">No. 128</div></div>
+    <div class="grid-item" data-idx="128" data-group="Sculptural Forms" data-name="product129"><img src="images/product129.jpeg" alt="No. 129" loading="lazy"><div class="grid-item-num">No. 129</div></div>
+    <div class="grid-item" data-idx="129" data-group="Sculptural Forms" data-name="product130"><img src="images/product130.jpeg" alt="No. 130" loading="lazy"><div class="grid-item-num">No. 130</div></div>
+    <div class="grid-item" data-idx="130" data-group="Sculptural Forms" data-name="product131"><img src="images/product131.jpeg" alt="No. 131" loading="lazy"><div class="grid-item-num">No. 131</div></div>
+    <div class="grid-item" data-idx="131" data-group="Sculptural Forms" data-name="product132"><img src="images/product132.jpeg" alt="No. 132" loading="lazy"><div class="grid-item-num">No. 132</div></div>
+    <div class="grid-item" data-idx="132" data-group="Sculptural Forms" data-name="product133"><img src="images/product133.jpeg" alt="No. 133" loading="lazy"><div class="grid-item-num">No. 133</div></div>
+    <div class="grid-item" data-idx="133" data-group="Sculptural Forms" data-name="product134"><img src="images/product134.jpeg" alt="No. 134" loading="lazy"><div class="grid-item-num">No. 134</div></div>
+    <div class="grid-item" data-idx="134" data-group="Sculptural Forms" data-name="product135"><img src="images/product135.jpeg" alt="No. 135" loading="lazy"><div class="grid-item-num">No. 135</div></div>
+  </div>
+</section>
+<div class="section-divider"><div class="divider-line"></div><div class="divider-mark"></div><div class="divider-line"></div></div>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  <div class="footer-brand">The Rug Atelier</div>
+  <div class="footer-tag">Custom · Handcrafted · Direct from Bhadohi</div>
+  <div class="footer-url">therugatelier.co</div>
+</footer>
+
+</div><!-- /portfolio-body -->
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLB()" aria-label="Close">&#x2715;</button>
+  <button class="lightbox-nav lightbox-prev" onclick="navLB(-1)" aria-label="Previous">&#x2039;</button>
+  <div class="lightbox-img-wrap">
+    <img id="lb-img" src="" alt="">
+  </div>
+  <div class="lightbox-meta">
+    <div class="lightbox-counter" id="lb-counter"></div>
+    <div class="lightbox-group" id="lb-group"></div>
+  </div>
+  <button class="lightbox-nav lightbox-next" onclick="navLB(1)" aria-label="Next">&#x203A;</button>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── NAV SHOW/HIDE ─────────────────────────── */
+  const cover = document.getElementById('cover');
+  const nav   = document.getElementById('main-nav');
+  const io = new IntersectionObserver(function(entries) {
+    nav.classList.toggle('hidden', entries[0].isIntersecting);
+  }, { threshold: 0.05 });
+  io.observe(cover);
+
+  /* ── GRID ITEMS ────────────────────────────── */
+  const items = Array.from(document.querySelectorAll('.grid-item'));
+  const N = items.length;
+
+  // Mark broken images
+  items.forEach(function(el) {
+    var img = el.querySelector('img');
+    img.addEventListener('error', function() { el.classList.add('missing'); });
+    el.addEventListener('click', function() { openLB(parseInt(el.dataset.idx, 10)); });
+  });
+
+  /* ── LIGHTBOX ──────────────────────────────── */
+  var current = 0;
+  var lb      = document.getElementById('lightbox');
+  var lbImg   = document.getElementById('lb-img');
+  var lbCtr   = document.getElementById('lb-counter');
+  var lbGrp   = document.getElementById('lb-group');
+
+  function openLB(idx) {
+    current = idx;
+    var el  = items[idx];
+    lbImg.src = el.querySelector('img').src;
+    lbCtr.textContent = 'No. ' + pad(idx + 1) + '  /  ' + pad(N);
+    lbGrp.textContent = el.dataset.group;
+    lb.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLB() {
+    lb.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function navLB(dir) {
+    current = (current + dir + N) % N;
+    var el  = items[current];
+    lbImg.src = el.querySelector('img').src;
+    lbCtr.textContent = 'No. ' + pad(current + 1) + '  /  ' + pad(N);
+    lbGrp.textContent = el.dataset.group;
+  }
+
+  function pad(n) { return String(n).padStart(3, '0'); }
+
+  // Close on backdrop click
+  lb.addEventListener('click', function(e) {
+    if (e.target === lb) closeLB();
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    if (!lb.classList.contains('active')) return;
+    if (e.key === 'Escape')      closeLB();
+    if (e.key === 'ArrowRight') navLB(1);
+    if (e.key === 'ArrowLeft')  navLB(-1);
+  });
+
+  // Touch swipe on lightbox
+  var touchStartX = 0;
+  lb.addEventListener('touchstart', function(e) {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+  lb.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].screenX - touchStartX;
+    if (Math.abs(dx) > 40) navLB(dx < 0 ? 1 : -1);
+  }, { passive: true });
+
+  // Expose for inline onclick
+  window.closeLB = closeLB;
+  window.navLB   = navLB;
+
+}());
+</script>
+</body>
+</html>
